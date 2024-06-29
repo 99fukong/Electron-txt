@@ -1,4 +1,12 @@
-const {dialog} = require("@electron/remote")
+var dialog = null
+function get_dialog() {
+  if (dialog === null) {
+    return require("@electron/remote").dialog
+  }
+  return dialog
+}
+
+// const {dialog} = require("@electron/remote")
 
 // const electron = require('electron').remote
 // const dialog = electron.dialog
@@ -8,6 +16,7 @@ const path = require('path');
 
 function saveNote() {
   const noteText = document.getElementById('noteText').value;
+  dialog = get_dialog()
   dialog.showSaveDialog({
     title: '保存记事本',
     defaultPath: path.join(__dirname, 'note.txt'),
